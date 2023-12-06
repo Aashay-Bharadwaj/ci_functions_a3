@@ -30,7 +30,11 @@ def call(serviceDirectory, dockerRepoName, imageName) {
             steps {
                 script {
                     // Install safety (Make sure you have safety installed on your Jenkins server)
-                    // sh 'pipx install safety'
+                    sh 'python3 -m pip install --user pipx'
+                    sh 'python3 -m pipx ensurepath'
+
+                    // Install safety using pipx
+                    sh 'pipx install safety'
                     dir(serviceDirectory) {
                         // Scan Python dependencies for vulnerabilities
                         sh 'safety check --full-report -r requirements.txt'
