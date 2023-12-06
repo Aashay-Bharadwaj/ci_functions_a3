@@ -31,7 +31,6 @@ def call(serviceDirectory, dockerRepoName, imageName) {
                 script {
                     // Install safety (Make sure you have safety installed on your Jenkins server)
                     
-                    sh 'sudo apt install python3-safety'
                     dir(serviceDirectory) {
                         // Scan Python dependencies for vulnerabilities
                         sh 'safety check --full-report -r requirements.txt'
