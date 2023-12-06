@@ -11,7 +11,7 @@ def call() {
                 steps {
                         sh 'pwd'
                         // Install dependencies from requirements.txt
-                        sh 'pip install -r requirements.txt --break-system-packages'
+                        sh 'pip install -r audit_log/requirements.txt --break-system-packages'
                         sh 'pip install --upgrade flask --break-system-packages'
                 }
             }
