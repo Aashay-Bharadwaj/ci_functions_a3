@@ -1,4 +1,4 @@
-def call() {
+def call(serviceDirectory) {
     pipeline {
         agent any
 
@@ -9,16 +9,20 @@ def call() {
         stages {
             stage('Build') {
                 steps {
+                    dir(serviceDirectory) {
                         sh 'pwd'
                         // Install dependencies from requirements.txt
-                        sh 'pip install -r audit_log/requirements.txt --break-system-packages'
+                        sh 'pip install -r requirements.txt --break-system-packages'
                         sh 'pip install --upgrade flask --break-system-packages'
+                    }
                 }
             }
             
             stage('Python Lint') {
                 steps {
-                    sh 'pylint --fail-under=5 audit_log/*.py'
+                    dir(serviceDirectory) {
+                        sh 'pylint --fail-under=5 *.py'
+                    }
                 }
             }
 
