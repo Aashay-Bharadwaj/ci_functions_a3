@@ -67,10 +67,12 @@ def call(serviceDirectory, dockerRepoName, imageName) {
                     expression { env.GIT_BRANCH == 'origin/main' }
                 }
                 steps {
-                    withCredentials([string(credentialsId: 'DockerHub', variable: 'TOKEN')]) {
-                        sh "docker login -u 'aashaybharadwaj' -p '$TOKEN' docker.io"
-                        sh "docker build -t ${dockerRepoName}:latest --tag aashaybharadwaj/${dockerRepoName}:${imageName} ."
-                        sh "docker push aashaybharadwaj/${dockerRepoName}:${imageName}"
+                    dir(serviceDirectory) {
+                        withCredentials([string(credentialsId: 'DockerHub', variable: 'TOKEN')]) {
+                            sh "docker login -u 'aashaybharadwaj' -p '$TOKEN' docker.io"
+                            sh "docker build -t ${dockerRepoName}:latest --tag aashaybharadwaj/${dockerRepoName}:${imageName} ."
+                            sh "docker push aashaybharadwaj/${dockerRepoName}:${imageName}"
+                        }
                     }
                 }
             }
