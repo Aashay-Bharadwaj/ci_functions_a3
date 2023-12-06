@@ -18,7 +18,7 @@ def call() {
             
             stage('Python Lint') {
                 steps {
-                    sh 'pylint --fail-under=5 *.py'
+                    sh 'pylint --fail-under=5 audit_log/*.py'
                 }
             }
 
