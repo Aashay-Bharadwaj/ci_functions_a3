@@ -18,6 +18,7 @@ def call(serviceDirectory, dockerRepoName, imageName) {
                 }
             }
             
+            
             stage('Python Lint') {
                 steps {
                     dir(serviceDirectory) {
@@ -39,6 +40,7 @@ def call(serviceDirectory, dockerRepoName, imageName) {
                         sh 'safety check --full-report --fail-below 2 -r requirements.txt'
                     }
                 }
+            }
             }
 
             // stage('Test and Coverage') {
