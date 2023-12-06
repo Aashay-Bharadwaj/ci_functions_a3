@@ -33,7 +33,7 @@ def call(serviceDirectory, dockerRepoName, imageName) {
                     
                     dir(serviceDirectory) {
                         // Scan Python dependencies for vulnerabilities
-                        sh 'safety check --full-report -r requirements.txt'
+                        sh 'safety check --full-report'
                     }
                     // Fail the build if vulnerabilities are found (adjust the severity as needed)
                     catchError(buildResult: 'UNSTABLE') {
