@@ -25,6 +25,21 @@ def call(serviceDirectory, dockerRepoName, imageName) {
                     }
                 }
             }
+            stage('Security Check') {
+            steps {
+                script {
+                    // Install safety (Make sure you have safety installed on your Jenkins server)
+                    sh 'pip install safety'
+                    dir(serviceDirectory) {
+                        // Scan Python dependencies for vulnerabilities
+                        sh 'safety check --full-report -r requirements.txt'
+                    }
+                    // Fail the build if vulnerabilities are found (adjust the severity as needed)
+                    catchError(buildResult: 'UNSTABLE') {
+                        sh 'safety check --full-report --fail-below 2 -r requirements.txt'
+                    }
+                }
+            }
 
             // stage('Test and Coverage') {
             //     steps {
