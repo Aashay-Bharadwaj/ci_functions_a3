@@ -9,8 +9,11 @@ def call() {
         stages {
             stage('Build') {
                 steps {
-                    sh 'pip install -r ./requirements.txt --break-system-packages'
-                    sh 'pip install --upgrade flask --break-system-packages'
+                    dir('../') {
+                        // Install dependencies from requirements.txt
+                        sh 'pip install -r requirements.txt --break-system-packages'
+                        sh 'pip install --upgrade flask --break-system-packages'
+                    }
                 }
             }
             
